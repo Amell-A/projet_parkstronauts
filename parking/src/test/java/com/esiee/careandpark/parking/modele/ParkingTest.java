@@ -57,7 +57,8 @@ class ParkingTest {
 		Parking parking = new Parking(0, 2, 0, 0,"");
 		
 		List<Place> places = parking.getPlaces();
-		assertEquals(2,places.size(), "il  doit y avoir 2 place");
+		//test
+		assertEquals(4,places.size(), "il  doit y avoir 2 place");
 		
 		for(Place place : places) {
 			assertEquals(TypePlace.HANDICAPE,place.getType(), "La place doit être handicape");

@@ -1,6 +1,7 @@
 package com.esiee.careandpark.parking.modele;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import com.esiee.careandpark.parking.modele.exceptions.PlaceNotFoundException;
+import com.esiee.careandpark.parking.modele.reference.EtatPlace;
 import com.esiee.careandpark.parking.modele.reference.TypePlace;
 
 class ParkingTest {
@@ -92,11 +95,39 @@ class ParkingTest {
 	}
 
 	@Test
-	void testSearchPlaceLibreWithNoPlace_returnEmptyList() {
-		Parking parking = new Parking(0, 0, 0, 0,"");
+	void testSearchPlaceLibre() {
+		Parking parking = new Parking(40, 15, 5, 20,"4 Av. des Abbesses, 77500 Chelles");
 		
-		List<Place> places = parking.searchPlaceLibre(TypePlace.NOMINALE);
-		assertTrue(places.isEmpty(), "il ne doit pas y avoir de place de libres");
+		List<Place> placesDispoNominale = parking.searchPlaceLibre(TypePlace.NOMINALE);
+		assertEquals(40,placesDispoNominale.size(), "il  doit y avoir 40 places libres");
+
+		List<Place> placesDispoHandicape = parking.searchPlaceLibre(TypePlace.HANDICAPE);
+		assertEquals(15,placesDispoHandicape.size(), "il  doit y avoir 15 places libres");
+
+		List<Place> placesDispoBus = parking.searchPlaceLibre(TypePlace.BUS);
+		assertEquals(5,placesDispoBus.size(), "il  doit y avoir 5 places libres");
+
+		List<Place> placesDispo2roues = parking.searchPlaceLibre(TypePlace.DEUX_ROUES);
+		assertEquals(20,placesDispo2roues.size(), "il  doit y avoir 20 places libres");
+
+	}
+
+	@Test
+	void testOccuperPlace() {
+		Parking parking = new Parking(40, 15, 5, 20,"4 Av. des Abbesses, 77500 Chelles");
+		
+		try{
+			parking.occuperPlace(10);
+		}catch(PlaceNotFoundException e){
+			Assertions.fail("Exception innatendu quand on appelle occuperPlace()"+e.getMessage());
+		}
+
+		assertEquals(EtatPlace.Occupe,parking.getPlaces().get(9).getEtat(), "la place doit etre occupée");
+		
+		Assertions.assertThrows(PlaceNotFoundException.class, () -> {
+			  parking.occuperPlace(300);;
+		});
+		
 	}
 
 }

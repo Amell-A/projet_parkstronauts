@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.esiee.careandpark.parking.modele.exceptions.PlaceNotFoundException;
+import com.esiee.careandpark.parking.modele.reference.EtatPlace;
 import com.esiee.careandpark.parking.modele.reference.TypePlace;
 
 public class Parking {
@@ -66,8 +67,19 @@ public class Parking {
 	 * @return
 	 */
 	public List<Place> searchPlaceLibre(TypePlace type){
-		//TODO
-		return Collections.emptyList();
+		// Création d'une liste pour stocker toutes lees places libres
+		List<Place> placesDispo =new ArrayList<>();
+		// Parcours touetes les places 
+		for (int i = 0; i < places.size(); i++){
+			Place place= places.get(i);
+			// Si la place est libre et correspond au type de vehicule 
+			if (place.getType()==type && place.getEtat() ==EtatPlace.Libre) {
+				// Ajout de la place à la liste placesDispo
+				placesDispo.add(place );
+			}
+		}
+		// Retourne la liste contenant toutes les places libre qui correspondent au type de place recherch�
+		return placesDispo;
 	}
 	
 	/**
@@ -76,16 +88,41 @@ public class Parking {
 	 * @throws PlaceNotFoundException si la place de numéro numero n'existe pas
 	 */
 	public void occuperPlace(int numero) throws PlaceNotFoundException{
-		//TODO
-	}
-	
+		// Parcours touetes les places 
+        for (int i = 0; i < places.size(); i++){
+			Place place= places.get(i);
+			// Si le numéro de place est le même que celui passé en parametre 
+            if (place.getNumero()==numero) {
+				// Modifie l'état de la place à occupé
+                place.setEtat(EtatPlace.Occupe);
+                return;
+            }
+        }
+		//Renvoie une exception si le numéro n'existe pas 
+        throw new PlaceNotFoundException(numero);
+    }  
+
+
 	/**
 	 * le statut de la place de numéro numero passe à occupe
 	 * @param numero
 	 */
 	public void libererPlace(int numero) throws PlaceNotFoundException{
-		//TODO
-	}
+        // Parcours touetes les places
+		for (int i = 0; i < places.size(); i++){
+			Place place= places.get(i);
+		// Si le numéro de place est le même que celui passé en parametre
+            if (place.getNumero() ==numero) {
+                // Modifie l'état de la place à libre
+                place.setEtat(EtatPlace.Libre);
+                return ;
+            }
+        }
+        //Renvoie une exception si le numéro n'existe pas
+        throw new PlaceNotFoundException(numero) ;
+    }
+
+
 	
 	public String getAdresse() {
 		return adresse;

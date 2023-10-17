@@ -3,6 +3,10 @@ package com.esiee.careandpark.parking.modele;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.Duration;
 
 import com.esiee.careandpark.parking.modele.exceptions.PlaceNotFoundException;
 import com.esiee.careandpark.parking.modele.reference.EtatPlace;
@@ -140,5 +144,30 @@ public class Parking {
 		return places;
 		
 	}
+	
+	
+    private Map<String, LocalDateTime> dictionnairestationner = new HashMap<>();
+    private double tauxHoraire = 5.5; // Taux horaire en euros par heure
+    
+    // Constructeur pour ajouter des plaques 
+    public void Plaques() {
+    	dictionnairestationner.put("ABC123", LocalDateTime.of(2023, 1, 1, 12, 0)); // Exemple: plaque "ABC123" avec heure d'entrée à midi le 1er janvier 2023
+    	dictionnairestationner.put("XYZ789", LocalDateTime.of(2023, 1, 1, 14, 30)); // Exemple: plaque "XYZ789" avec heure d'entrée à 14h30 le 1er janvier 2023
+    }
+
+    public void prixentrersortie(String numeroPlaque) {
+        if (!dictionnairestationner.containsKey(numeroPlaque)) {
+        	dictionnairestationner.put(numeroPlaque, LocalDateTime.now());
+            System.out.println("Nouvelle plaque d'immatriculation ajoutée au système.");
+        } else {
+            LocalDateTime heureEntree = dictionnairestationner.get(numeroPlaque);
+            LocalDateTime heureSortie = LocalDateTime.now();
+            Duration dureeStationnement = Duration.between(heureEntree, heureSortie);
+            long minutesStationnement = dureeStationnement.toMinutes();
+            double prix = minutesStationnement * tauxHoraire / 60.0;
+            System.out.println("Le prix de stationnement pour la plaque "+numeroPlaque+" est de : "+prix+"€");
+        }
+    }
+    
 
 }

@@ -13,22 +13,35 @@ public class Paiement{
 
     private Map<String, List<LocalDateTime>> plaqueTexteHeureMap = new HashMap<>();
 
-    public String ia(String imageName) throws Exception{
-
+    public String ia(String imageName) throws Exception {
         // Create an instance of AsposeOcr class to apply OCR on an image
-        AsposeOCR TextExtractFromImage = new AsposeOCR();
+        AsposeOCR textExtractFromImage = new AsposeOCR();
 
-        // Read image using RecognizePage method for text extraction
-        String extractedText = TextExtractFromImage.RecognizePage("C:\\Users\\amaim\\OneDrive\\Documents\\ESIEE\\E5\\Capgemini\\projet_parkstronauts\\parking\\src\\test\\java\\com\\esiee\\careandpark\\parking\\modele\\plaque.png");
+        // Read image usin g RecognizePage method for text extraction
+        String extractedText = textExtractFromImage.RecognizePage(imageName);
+    
+        // Récupére la liste correspondante à la clé
+        List<LocalDateTime> heureList = plaqueTexteHeureMap.get(extractedText);
 
-        // Récupérez la liste correspondante à la clé ou créez une nouvelle liste si la clé n'existe pas encore
-        List<LocalDateTime> heureList = plaqueTexteHeureMap.computeIfAbsent(extractedText, key -> new ArrayList<>());
+        // Ajoutez l'heure actuelle à la liste ou créez une nouvelle liste si la clé n'existe pas encore
+        if (heureList == null) {
+            heureList = new ArrayList<>();
+            plaqueTexteHeureMap.put(extractedText, heureList);
+        }
 
-        // Ajoutez l'heure actuelle à la liste
-        heureList.add(LocalDateTime.now());
+        // Ajoute l'heure actuelle à la liste seulement si la liste a moins de deux éléments
+        if (heureList.size() < 2) {
+            heureList.add(LocalDateTime.now());
+        } else {
+            // Si la liste a déjà deux éléments on crée une nouvelle liste (et rempalce l'ancienne)
+            heureList = new ArrayList<>();
+            heureList.add(LocalDateTime.now());
+            plaqueTexteHeureMap.put(extractedText, heureList);
+        }
 
         return extractedText;
     }
+    
 
     public Map<String, List<LocalDateTime>> getPlaqueTexteHeureMap() {
         return plaqueTexteHeureMap;

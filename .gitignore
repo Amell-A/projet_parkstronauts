@@ -68,3 +68,4 @@ build/
 ### VS Code ###
 .vscode/
 /bin/
+/.metadata/

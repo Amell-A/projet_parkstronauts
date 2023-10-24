@@ -1,7 +1,6 @@
 package com.esiee.careandpark.parking.modele;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -56,7 +55,7 @@ class ParkingTest {
 	        }
 	    }
 	}
-	
+
 
 	@Test
 	void testCreationParkingWithOnlyHandicapePlace() {
@@ -147,7 +146,7 @@ class ParkingTest {
 	    Parking parking = new Parking(2, 40, 15, 5, 20, "4 Av. des Abbesses, 77500 Chelles");
 
 	    try {
-	        parking.occuperPlace(10, 1);
+	        parking.libererPlace(10, 1);
 	    } catch (PlaceNotFoundException e) {
 	        Assertions.fail("Exception inattendue lors de l'appel à libererPlace(): " + e.getMessage());
 	    }
@@ -159,5 +158,7 @@ class ParkingTest {
 	        parking.libererPlace(300, 1);
 	    });
 	}
+
+
 
 }

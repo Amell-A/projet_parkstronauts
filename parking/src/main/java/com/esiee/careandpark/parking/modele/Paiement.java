@@ -12,13 +12,13 @@ import java.util.Map;
 public class Paiement{
 
     private Map<String, List<LocalDateTime>> plaqueTexteHeureMap = new HashMap<>();
-    private Map<String, Double> tauxUnitaires = new HashMap<>();
+    private Map<TypePlace, Double> tauxUnitaires = new HashMap<>();
     
     public Paiement() {
-        tauxUnitaires.put("DEUX_ROUES", 1.485);
-        tauxUnitaires.put("HANDICAPE", 2.97);
-        tauxUnitaires.put("NOMINALE", 4.455);
-        tauxUnitaires.put("BUS", 8.91);
+        tauxUnitaires.put(TypePlace.DEUX_ROUES, 1.485);
+        tauxUnitaires.put(TypePlace.HANDICAPE, 2.97);
+        tauxUnitaires.put(TypePlace.NOMINALE, 4.455);
+        tauxUnitaires.put(TypePlace.BUS, 8.91);
     }
 
     public String ia(String imageName) throws Exception {
@@ -55,13 +55,13 @@ public class Paiement{
         return plaqueTexteHeureMap;
     }
 
-    public double calculerPrix(String plaqueImmatriculation, String typeVehicule) {
+    public double calculerPrix(String plaqueImmatriculation, TypePlace typeVehicule) {
         // Récupérez la liste d'heures correspondante à la clé (plaque d'immatriculation)
         List<LocalDateTime> heureList = plaqueTexteHeureMap.get(plaqueImmatriculation);
 
         // Récupérez la première et la deuxième heure
         LocalDateTime premiereHeure = heureList.get(0);
-        LocalDateTime deuxiemeHeure =heureList.get(1);
+        LocalDateTime deuxiemeHeure = heureList.get(1);
 
         // Calculez la durée en heures entre l'huere d'entrée et de sortie
         long dureeEnHeures = ChronoUnit.HOURS.between(premiereHeure, deuxiemeHeure)+1; 

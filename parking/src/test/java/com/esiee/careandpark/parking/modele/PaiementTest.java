@@ -5,6 +5,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
+import com.esiee.careandpark.parking.modele.reference.TypePlace;
+
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -63,11 +66,11 @@ public class PaiementTest {
 
             // Calcul du prix______________________________________________________________________________________
             // Appelez la nouvelle fonction calculerPrix pour obtenir le prix
-            double prix = paiement.calculerPrix(extractedText);
+            double prix = paiement.calculerPrix(extractedText,TypePlace.BUS);
             // Affichez le prix dans la console
             System.out.println("Prix calcule : " + prix+" euros");
             // Vérifiez que le prix est correct (50 euros pour 10 heures)
-            assertEquals(5, prix);
+            assertEquals(8.91, prix);
 
             // Test dans le cas où une fois sortie la voiture re-rentre________________________________________________________________
             extractedText = paiement.ia(imageName);

@@ -12,12 +12,20 @@ import java.util.Map;
 public class Paiement{
 
     private Map<String, List<LocalDateTime>> plaqueTexteHeureMap = new HashMap<>();
+    private Map<String, Double> tauxUnitaires = new HashMap<>();
+    
+    public Paiement() {
+        tauxUnitaires.put("DEUX_ROUES", 1.485);
+        tauxUnitaires.put("HANDICAPE", 2.97);
+        tauxUnitaires.put("NOMINALE", 4.455);
+        tauxUnitaires.put("BUS", 8.91);
+    }
 
     public String ia(String imageName) throws Exception {
         // Create an instance of AsposeOcr class to apply OCR on an image
         AsposeOCR textExtractFromImage = new AsposeOCR();
 
-        // Read image usin g RecognizePage method for text extraction
+        // Read image using RecognizePage method for text extraction
         String extractedText = textExtractFromImage.RecognizePage(imageName);
     
         // Récupére la liste correspondante à la clé
@@ -47,7 +55,7 @@ public class Paiement{
         return plaqueTexteHeureMap;
     }
 
-    public double calculerPrix(String plaqueImmatriculation) {
+    public double calculerPrix(String plaqueImmatriculation, String typeVehicule) {
         // Récupérez la liste d'heures correspondante à la clé (plaque d'immatriculation)
         List<LocalDateTime> heureList = plaqueTexteHeureMap.get(plaqueImmatriculation);
 
@@ -56,10 +64,13 @@ public class Paiement{
         LocalDateTime deuxiemeHeure =heureList.get(1);
 
         // Calculez la durée en heures entre l'huere d'entrée et de sortie
-        long dureeEnHeures = ChronoUnit.HOURS.between(premiereHeure, deuxiemeHeure)+1;
+        long dureeEnHeures = ChronoUnit.HOURS.between(premiereHeure, deuxiemeHeure)+1; 
+        
+        // Récupérez le taux unitaire pour le type de véhicule
+        double tauxUnitaire = tauxUnitaires.get(typeVehicule);
 
-        // Calculez le prix (5 euros par heure)
-        double prix = dureeEnHeures * 5;
+        // Calculez le prix en fonction du taux unitaire et de la durée
+        double prix = dureeEnHeures * tauxUnitaire;
 
         return prix;
     }

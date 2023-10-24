@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PaiementTest {
 
     @Test
-    public void iaTest() {
+    public void paiementTest() {
         // Plaque d'immatriculation
         String imageName = "C:\\Users\\amaim\\OneDrive\\Documents\\ESIEE\\E5\\Capgemini\\projet_parkstronauts\\parking\\src\\test\\java\\com\\esiee\\careandpark\\parking\\modele\\plaque.png";
 
@@ -24,18 +24,18 @@ public class PaiementTest {
             String extractedText = paiement.ia(imageName);
             assertEquals("ABCD 012\n", extractedText);
 
-            // Vérifiez si la clé existe dans la map
+            // Vérifie si la clé existe dans la map
             Map<String, List<LocalDateTime>> plaqueTexteHeureMap = paiement.getPlaqueTexteHeureMap();
             assertTrue(plaqueTexteHeureMap.containsKey(extractedText));
 
-            // Récupérez la liste contenant les dates/heures correspondante à la clé
+            // Récupére la liste contenant les dates/heures correspondante à la clé
             List<LocalDateTime> heureList = plaqueTexteHeureMap.get(extractedText);
-            // Vérifiez que la liste contient un élément
+            // Vérifie que la liste contient un élément
             assertTrue(heureList.size()== 1);
 
             LocalDateTime premiereHeure = heureList.get(0);
 
-            // Affichez le texte extrait et la date et l'heure d'entrée 
+            // Affichele texte extrait et la date et l'heure d'entrée 
             System.out.println("Heure d'entree dans le parking : " + premiereHeure);
             
             
@@ -69,10 +69,9 @@ public class PaiementTest {
             // Vérifiez que le prix est correct (50 euros pour 10 heures)
             assertEquals(5, prix);
 
-            // Test dans le cas où une fois sortie ua voiture re-rentre________________________________________________________________
+            // Test dans le cas où une fois sortie la voiture re-rentre________________________________________________________________
             extractedText = paiement.ia(imageName);
             heureList = plaqueTexteHeureMap.get(extractedText);
-
             System.out.println("Test voiture rerentre - contenu de la liste : " + heureList );
 
         } catch (Exception e) {

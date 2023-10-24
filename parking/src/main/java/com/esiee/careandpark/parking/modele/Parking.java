@@ -3,15 +3,12 @@ package com.esiee.careandpark.parking.modele;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-<<<<<<< HEAD
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-=======
 import java.util.HashMap;
 import java.util.Map;
 import java.time.LocalDateTime;
 import java.time.Duration;
->>>>>>> 6bbe05993e533df96445d7a86776ac6a973261eb
 
 import com.esiee.careandpark.parking.modele.exceptions.PlaceNotFoundException;
 import com.esiee.careandpark.parking.modele.reference.EtatPlace;

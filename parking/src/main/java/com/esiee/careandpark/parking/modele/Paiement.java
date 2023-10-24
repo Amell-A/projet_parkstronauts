@@ -1,6 +1,7 @@
 package com.esiee.careandpark.parking.modele;
 
 import com.aspose.ocr.AsposeOCR;
+import com.esiee.careandpark.parking.modele.reference.TypePlace;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -58,20 +59,21 @@ public class Paiement{
     public double calculerPrix(String plaqueImmatriculation, TypePlace typeVehicule) {
         // Récupérez la liste d'heures correspondante à la clé (plaque d'immatriculation)
         List<LocalDateTime> heureList = plaqueTexteHeureMap.get(plaqueImmatriculation);
-
+    
         // Récupérez la première et la deuxième heure
         LocalDateTime premiereHeure = heureList.get(0);
         LocalDateTime deuxiemeHeure = heureList.get(1);
-
-        // Calculez la durée en heures entre l'huere d'entrée et de sortie
-        long dureeEnHeures = ChronoUnit.HOURS.between(premiereHeure, deuxiemeHeure)+1; 
-        
+    
+        // Calculez la durée en heures entre l'heure d'entrée et de sortie
+        long dureeEnHeures = ChronoUnit.HOURS.between(premiereHeure, deuxiemeHeure)+1;
+    
         // Récupérez le taux unitaire pour le type de véhicule
         double tauxUnitaire = tauxUnitaires.get(typeVehicule);
-
+    
         // Calculez le prix en fonction du taux unitaire et de la durée
         double prix = dureeEnHeures * tauxUnitaire;
-
+    
         return prix;
     }
+    
 }

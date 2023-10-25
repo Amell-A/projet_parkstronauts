@@ -128,6 +128,14 @@ public class Parking {
         }
     }
 	
+    public int getNombreTotalPlaces() {
+        int nombreTotalPlaces = 0;
+        for (List<Place> etage : etages) {
+            nombreTotalPlaces += etage.size();
+        }
+        return nombreTotalPlaces;
+    }
+	
     public int getNombrePlacesLibresParType(TypePlace type) {
         int placesLibresType = 0;
         for (List<Place> etage : etages) {
@@ -139,6 +147,31 @@ public class Parking {
         }
         return placesLibresType;
     }
+    
+    public int getNombrePlacesLibres() {
+        int nombrePlacesLibres = 0;
+        for (List<Place> etage : etages) {
+            for (Place place : etage) {
+                if (place.getEtat() == EtatPlace.Libre) {
+                    nombrePlacesLibres++;
+                }
+            }
+        }
+        return nombrePlacesLibres;
+    }
+
+    public int getNombrePlacesOccupees() {
+        int nombrePlacesOccupees = 0;
+        for (List<Place> etage : etages) {
+            for (Place place : etage) {
+                if (place.getEtat() == EtatPlace.Occupe) {
+                    nombrePlacesOccupees++;
+                }
+            }
+        }
+        return nombrePlacesOccupees;
+    }
+    
 	
 	public String getAdresse() {
 		return adresse;

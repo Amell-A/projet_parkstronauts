@@ -17,7 +17,7 @@ public class PaiementTest {
     @Test
     public void paiementTest() {
         // Plaque d'immatriculation
-        String imageName = "C:\\Users\\amaim\\OneDrive\\Documents\\ESIEE\\E5\\Capgemini\\projet_parkstronauts\\parking\\src\\test\\java\\com\\esiee\\careandpark\\parking\\modele\\plaque.png";
+        String imageName = "C:\\Users\\evely\\Documents\\E5\\projet_parkstronauts\\parking\\src\\test\\java\\com\\esiee\\careandpark\\parking\\modele\\plaque.png";
 
         // Crée une instance de la classe Payement
         Paiement paiement = new Paiement();
@@ -34,7 +34,7 @@ public class PaiementTest {
             // Récupére la liste contenant les dates/heures correspondante à la clé
             List<LocalDateTime> heureList = plaqueTexteHeureMap.get(extractedText);
             // Vérifie que la liste contient un élément
-            assertTrue(heureList.size()== 1);
+            assertTrue(heureList.size() == 1);
 
             LocalDateTime premiereHeure = heureList.get(0);
 
